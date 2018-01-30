@@ -61,7 +61,7 @@ export class HomePage {
     }
   ];
 
-  private currentPosition : number;
+  private currentAnimal;
   public result : string;
   public showReorder = false;
 
@@ -70,15 +70,17 @@ export class HomePage {
  *  fonctiion pour choix aléatoire d'un animal
  * si aucun choix préalable
  */
-  pickAnimalPosition() {
+  pickAnimal() {
     let pos;
-    if (!this.currentPosition) {
+    let animal;
+    if (!this.currentAnimal) {
       pos = Math.floor(Math.random() * this.animals.length);
+      animal = this.animals[pos];
     } else {
-      pos = this.currentPosition
+      animal = this.currentAnimal;
     }
 
-    return pos;
+    return animal;
   }
   /**
  * fonction Lecture d'un son
@@ -88,12 +90,11 @@ export class HomePage {
     this.result = "";
 
     //choix d'un animal
-    this.currentPosition = this.pickAnimalPosition();
-    let choosenAnimal = this.animals[this.currentPosition];
+    this.currentAnimal = this.pickAnimal();
 
     // chargement du son
     let audio = new Audio();
-    audio.src = 'assets' + choosenAnimal.file;
+    audio.src = 'assets' + this.currentAnimal.file;
     audio.load();
 
     // Lecture du son
@@ -105,16 +106,17 @@ export class HomePage {
    * @param pos
    * deviner l'animal en fonction de son cri
    */
-  guess(pos) {
+  guess(animalName) {
     //est ce que l'on a joué un son
-    if (this.currentPosition) {}
-    //est ce que l'on a choisi un animal
-    if (pos == this.currentPosition) {
-      this.result = "Gagné";
-      // Rénitialisation du choix pour faire une nouvelle partie
-      this.currentPosition = null;
-    } else {
-      this.result = "Essaie encore";
+    if (this.currentAnimal) {
+      //est ce que l'on a choisi un animal
+      if (animalName == this.currentAnimal.title) {
+        this.result = "Gagné";
+        // Rénitialisation du choix pour faire une nouvelle partie
+        this.currentAnimal = null;
+      } else {
+        this.result = "Essaie encore";
+      }
     }
   }
 
