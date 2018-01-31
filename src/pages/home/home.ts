@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, ToastController} from 'ionic-angular';
+import { DetailPage } from '../detail/detail';
 
 @Component({selector: 'page-home', templateUrl: 'home.html'})
 export class HomePage {
@@ -139,6 +140,10 @@ export class HomePage {
           .present();
       }
     }
+    
   }
-
+  goToDetails(animal){
+    console.log(animal);
+    this.navCtrl.push(DetailPage, {data: animal});
+  }
 }
