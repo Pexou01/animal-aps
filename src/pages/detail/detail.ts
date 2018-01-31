@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 
 /**
  * Generated class for the DetailPage page.
@@ -15,8 +15,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class DetailPage {
   public animal;
+  public inputText:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+   public events: Events) {
     this.animal = navParams.get('data');
     console.log(this.animal);
   }
@@ -24,5 +26,12 @@ export class DetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetailPage');
   }
-
+ ionViewDidLeave(){
+   let data = {
+     input: this.inputText,
+     origin: "detailsPage"
+   }
+   // Publication d'un Evenement
+  this.events.publish('event.data', JSON.stringify(data));
+ }
 }
