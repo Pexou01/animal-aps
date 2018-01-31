@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, ToastController} from 'ionic-angular';
 
 @Component({selector: 'page-home', templateUrl: 'home.html'})
 export class HomePage {
@@ -65,7 +65,7 @@ export class HomePage {
   public result : string;
   public showReorder = false;
 
-  constructor(public navCtrl : NavController) {}
+  constructor(public navCtrl : NavController, public ToastCtrl : ToastController) {}
   /**
  *  fonctiion pour choix aléatoire d'un animal
  * si aucun choix préalable
@@ -111,11 +111,32 @@ export class HomePage {
     if (this.currentAnimal) {
       //est ce que l'on a choisi un animal
       if (animalName == this.currentAnimal.title) {
-        this.result = "Gagné";
+        // CREATION d'un toast
+        this
+          .ToastCtrl
+          .create({
+            //message affiche
+            message: "Gagné",
+            // temps affichage
+            duration: 2000,
+            //position du message
+            position: 'top'
+          })
+          .present();
         // Rénitialisation du choix pour faire une nouvelle partie
         this.currentAnimal = null;
       } else {
-        this.result = "Essaie encore";
+        this
+          .ToastCtrl
+          .create({
+            //message affiche
+            message: "perdu",
+            // temps affichage
+            duration: 2000,
+            //position du message
+            position: 'top'
+          })
+          .present();
       }
     }
   }
